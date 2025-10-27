@@ -1,4 +1,4 @@
-# STE model
+# STE Gemini Model
 Working on a comprehensive guide to STE and all it can do.
 STE_Gemini_Model.md is the version I got from Gemini.
 STE_Gemini_Conceptual_History.md how we got there.
