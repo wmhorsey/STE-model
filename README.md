@@ -1,5 +1,6 @@
 # STE Gemini Model
 Working on a comprehensive guide to STE and all it can do.
+STE_Full_Story.md is the finished master idea.
 STE_Gemini_Model.md is the version I got from Gemini.
 STE_Gemini_Conceptual_History.md how we got there.
 STE_Grok_Unified.md is a version still working on with Grok
