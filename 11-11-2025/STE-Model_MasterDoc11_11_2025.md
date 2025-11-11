@@ -53,7 +53,7 @@ Duality: Voids (stable sinks) vs. Spikes (unstable outflows/pressure vents).
 
 ## 2. Lagrangian & Forces
 
-ℒ_STE = [½ρ(∂φ/∂t_u)^2 - ½c²ρ(∇φ)^2] - [½(ρ²/ρ_Higgs)] - [α_W ρ ln(ρ/ρ_ambient)] - [α ρ ln(m_e/m_probe)] - V(Φ)
+ℒ_STE = [½ρ(∂φ/∂t_u)^2 - ½c²ρ(∇φ)^2] - [½(ρ²/ρ_Higgs)] - [α_W ρ ln(ρ/ρ_ambient)] - [α ρ ln(m_probe/m_e)] - V(Φ)
 
 Forces:
 - Gravity: 3D bulk tension (self-attraction).
