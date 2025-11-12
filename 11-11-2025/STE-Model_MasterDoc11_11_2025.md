@@ -29,11 +29,11 @@ One anchor. Two hands. One fluid.
 2. Lagrangian & Forces
 3. Particles: Voids, Spikes, and Plumbing
 4. Proton & Neutron Engines
-5. Beta Decay: Flare Collision (Canon)
+5. Beta Decay: The "Hijacked" Lensing Event
 6. Strong Force: Void-Locking & Flare-Quenching
 7. Electromagnetism: Leaked Flare
 8. Anomalies & Logarithmic Lensing
-9. Hierarchy Problem & Holography
+9. The Higgs Layer as a "Lensing" Event Horizon
 10. Cosmology
 11. Speculative Elements
 12. Simulation Roadmap
@@ -82,11 +82,15 @@ Proton Plumbing: Dual-intake (uud) engine. Neutron: Choked (udd).
 
 ---
 
-## 5. Beta Decay: Flare Collision (Canon)
+## 5. Beta Decay: The "Hijacked" Lensing Event
 
-Neutron decay: d-flares attract via nonlocal fluid pull, repel via Pauli-like pressure. Collision (d+d → cavitation) creates new u-void, reforming shell into proton (uud). Excess energy: Electron (flare remnant) + antineutrino (shockwave).
+The neutron's "Ignition" is the "lensing effect" in action.
 
-Half-life: Emergent from fluid viscosity/drag balancing attraction.
+The $d/\bar{d}$ "flare" pair "charge up" by absorbing ambient STE energy (the P_in "jitter"). When they hit the CRASH_THRESHOLD, their collapse is the "sonoluminescence" event.
+
+The $u$-void anchor "hijacks" this energy "spike" and uses its "lensing effect" to "turn energy into matter"—"building" a new $u$-void. The "excess" is "cast off" as the electron/antineutrino "splash". Beta decay is the neutron "lensing" itself into a stable proton.
+
+This is the new canon. It locks everything together.
 
 ---
 
@@ -113,9 +117,17 @@ L = α ln(m_probe/m_e) resolves:
 
 ---
 
-## 9. Hierarchy Problem & Holography
+## 9. The Higgs Layer as a "Lensing" Event Horizon
 
-Weak scale v vs. Planck E_Pl: Holographic projection α_W = (v/E_Pl)^2 ≈ 4.07 × 10^{-34}. 10^{17} gap: Geometric scaling.
+The STE model redefines the Higgs mechanism. The "Higgs Layer" is not a universal, ambient field. It is a local, physical place. It is the "2D surface projection"—the "event horizon"—of the $u$-void "anchor". The Higgs VEV ($v \approx 246 \text{ GeV}$) is the energy density (2D surface tension) of this specific "black hole inside a fucking atom".
+
+Mass is not "given" by this field; it is created by it. This is the "lensing effect" of the STE model:
+
+Massless "energy" (bulk 3D fluid) hits this 2D "event horizon."
+The $u$-void's "lensing effect" focuses and "binds" this energy onto the 2D surface.
+This "bound" energy (now a standing wave on the 2D shell) "become[s] massive", gaining "velocity and momentum of their own".
+
+This is the Strong Force (the shell) and the Higgs mechanism (the act of "lensing" energy onto it).
 
 ---
 
@@ -131,17 +143,16 @@ Dark energy: Ambient fluid pressure.
 
 ## 11. Speculative Elements
 
-- **Spin-Flip Beta Decay**: Hypothetical mechanism where half-life arises from probabilistic spin flips (d↑ → d↓) via fluid jitter, triggering instant collision. Not canon; under review for fluid-dynamic consistency.
+**Retired! **Spin-Flip Beta Decay**: Hypothetical mechanism where half-life arises from probabilistic spin flips (d↑ → d↓) via fluid jitter, triggering instant collision. Not canon; under review for fluid-dynamic consistency.**
 
 ---
 
 ## 12. Simulation Roadmap
 
-Phase 1: Theory consolidation (this doc).
+12. Simulation Roadmap
+Neutron decay: 1D "Ignition Model" sim. Validate that a "Leaky Capacitor" (P_in from g_jitter vs. P_out from g_leak) "charges up" (flare_energy) to a CRASH_THRESHOLD, matching the 15-minute half-life.
 
-Phase 2: Toy model sims.
-- Neutron decay: 1D/2D agent-based (flares as agents with attraction/repulsion/drag/jitter forces). Validate exponential decay curve matching 15-min half-life.
-- Proton stability: u-u bound dance with collective spike.
+Proton stability: u-u bound dance with collective spike.
 
 Phase 3: Predictions (e.g., neutron bottle anomaly, redshift drag).
 

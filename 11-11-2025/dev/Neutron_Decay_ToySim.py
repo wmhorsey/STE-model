@@ -1,138 +1,82 @@
-"""
-Neutron Decay Toy Simulation: STE Model Validation
-Date: November 11, 2025 (Double 11s - Transition to Testing)
-Author: Ceryn Nekoi (VoidPlumber)
-
-This is a simplified 1D agent-based toy model for neutron beta decay.
-- Neutron: Single u-void with two d-flares on a circular path.
-- Forces: Attraction (pulls flares together), Repulsion (Pauli-like push), Drag (viscosity), Jitter (random noise).
-- Goal: Emergent exponential decay matching 15-minute half-life.
-- Run 10,000 trials, plot histogram of decay times.
-"""
-
 import numpy as np
 import matplotlib.pyplot as plt
 import random
 import time
+import multiprocessing
 
 # Simulation Parameters
-CIRCUMFERENCE = 1.0  # Normalized for sim stability
-NUM_TRIALS_BASE = 10
-NUM_TRIALS_FULL = 25
-TIME_STEP_COARSE = 1.0  # Our 1-second check interval
-TIME_STEP_FINE = 1e-6   # Reduced for faster crash simulation
-MAX_SIM_TIME = 10000.0  # 10,000 seconds
-HALF_LIFE_TARGET = 15 * 60  # 15 minutes in seconds
+CIRCUMFERENCE = 1.0
+NUM_TRIALS_FULL = 50000 # Full run
+TIME_STEP_COARSE = 1.0  # 1 second "Wait" step
+TIME_STEP_FINE = 1e-6   # 1 microsecond "Crash" step
+MAX_SIM_TIME = 10000.0  # 10,000s timeout
+HALF_LIFE_TARGET = 15 * 60  # 900 seconds
 
-# Force Constants (hybrid model, scaled)
-g_attract = 4e-10  # Scaled for CIRCUMFERENCE = 1
-g_repel = 5.93e-8  # Scaled for balance
+# --- NEW "KNOBS" ---
+g_attract = 4e-2  # Strong attraction for crash
 g_drag = 1e-10     # Superfluid viscosity
-g_jitter = 1.24e-21  # Unchanged
-SPIN_FLIP_BARRIER = 1.238e-21  # Lower for decays
+g_jitter = 1.24e-21  # Power In
+g_leak = 3.474e-22      # Calculated value
+CRASH_THRESHOLD = 2.805e-19  # Battery size (calculated)
 
-COLLISION_DIST = 0.01  # 1% of circumference
+COLLISION_DIST = 0.01
 
 class NeutronSim:
     def __init__(self):
-        # Initial positions: Flares at 0 and 0.5 (opposite sides)
+        # Initial positions: Flares at 0 and 0.5
         self.pos1 = 0.0
         self.pos2 = 0.5
         self.vel1 = 0.0
         self.vel2 = 0.0
-        self.flare1_spin = 1
-        self.flare2_spin = 1
+        self.flare1_spin = 1   # d-flare
+        self.flare2_spin = -1  # anti-d-flare
+        self.flare_energy = 0.0  # Cumulative charging
         self.time = 0.0
-
-        # --- THIS IS THE FIX ---
-        # 1. Set our g_attract (this is a tunable knob)
-        global g_attract
-        g_attract = 4e-2 
+        self.time_step = TIME_STEP_COARSE
         
-        # 2. Calculate the "F_attract" at the start
+        # --- FORCE BALANCING ---
+        global g_repel
         initial_dist = self.distance()
         initial_f_attract = g_attract / (initial_dist ** 2)
-        
-        # 3. Calculate the "F_repel_base" at the start
-        #    (This is the np.exp() part of the formula)
         initial_f_repel_base = np.exp(-initial_dist / (CIRCUMFERENCE / 10))
-        
-        # 4. NOW, *SET* g_repel to *perfectly balance* g_attract
-        global g_repel
         if initial_f_repel_base > 0:
-             g_repel = initial_f_attract / initial_f_repel_base
+            g_repel = initial_f_attract / initial_f_repel_base
         else:
-             g_repel = 0 # Avoid division by zero, though exp() shouldn't be zero
-        
-        # --- END FIX ---
-        
-        # (Load g_jitter and SPIN_FLIP_BARRIER here)
-        global g_jitter, SPIN_FLIP_BARRIER, g_drag
-        g_jitter = 1.24e-21
-        SPIN_FLIP_BARRIER = 1.238e-21 # Your manually tuned value
-        g_drag = 1e-10 # Reduced for superfluid physics
-
-        # --- NEW VARIABLE ---
-        self.time_step = TIME_STEP_COARSE # Start with the 1-second step
+            g_repel = 0
 
     def distance(self):
-        # Shortest distance on circle
         dist = abs(self.pos1 - self.pos2)
         return min(dist, CIRCUMFERENCE - dist)
 
     def forces(self):
         dist = self.distance()
-        if dist == 0:
-            return 0, 0  # Avoid division
-
-        # Attraction: Inverse square
+        if dist == 0: dist = 1e-20
+        
+        # Attraction (always on)
         f_attract = g_attract / (dist ** 2)
-        dir1 = 1 if self.pos2 > self.pos1 else -1  # Toward pos2
+        dir1 = 1 if self.pos2 > self.pos1 else -1
         dir2 = -dir1
-
-        # Repulsion: Exponential for Pauli (conditional on spins)
-        f_repel = 0
-        if self.flare1_spin == self.flare2_spin:
-            f_repel = g_repel * np.exp(-dist / (CIRCUMFERENCE / 10))
-        dir_repel1 = -dir1  # Away from pos2
-        dir_repel2 = -dir_repel1
-
-        # Drag: Opposes velocity
-        f_drag1 = -g_drag * self.vel1
-        f_drag2 = -g_drag * self.vel2
-
-        # Jitter: Random (removed from forces, only for spin-flip)
-        f_jitter1 = 0
-        f_jitter2 = 0
-
+        
+        # Repulsion (barrier, can be turned off)
+        f_repel = g_repel * np.exp(-dist / (CIRCUMFERENCE / 10))
+        
         # Total forces
-        f1 = f_attract * dir1 + f_repel * dir_repel1 + f_drag1 + f_jitter1
-        f2 = f_attract * dir2 + f_repel * dir_repel2 + f_drag2 + f_jitter2
-
+        f1 = f_attract * dir1 - f_repel * dir1
+        f2 = f_attract * dir2 - f_repel * dir2
+        
         return f1, f2
 
     def step(self):
-        # Phase 1: Check for Trigger
+        # --- THIS IS A "DUMB" MECHANICAL STEP ---
+        # The "brain" (the run() function) has
+        # already set the g_repel and time_step.
         
-        # --- NEW LOGIC ---
-        # Only check for a spin-flip IF we are in the coarse "Wait" phase
-        if self.time_step == TIME_STEP_COARSE:
-            jitter_kick = abs(random.uniform(-g_jitter, g_jitter))
-            if jitter_kick > SPIN_FLIP_BARRIER:
-                self.flare2_spin = -1  # Flip one spin
-                # --- THIS IS THE SWITCH ---
-                # We have been triggered! Switch to high-fidelity
-                # mode to "validate the mechanics" of the crash.
-                self.time_step = TIME_STEP_FINE 
-
-        # Phase 2: Run Mechanical Sim
-        # (This part now runs with EITHER the coarse or fine time step)
+        # --- Phase 2: Mechanical Sim ---
         f1, f2 = self.forces()
         
-        # Update velocities (F = ma, assume m=1)
-        # We MUST scale by time_step here
-        self.vel1 += f1 * self.time_step
-        self.vel2 += f2 * self.time_step
+        # Update velocities
+        self.vel1 += (f1 - g_drag * self.vel1) * self.time_step
+        self.vel2 += (f2 - g_drag * self.vel2) * self.time_step
         
         # Update positions
         self.pos1 = (self.pos1 + self.vel1 * self.time_step) % CIRCUMFERENCE
@@ -141,132 +85,91 @@ class NeutronSim:
         self.time += self.time_step
 
     def run(self):
-        # --- LOOP 1: THE "WAIT" PHASE (Coarse Time Step) ---
-        # We use the coarse step to "wait" for the probabilistic flip.
-        
-        # We must make sure we are using the coarse step at the start
-        self.time_step = TIME_STEP_COARSE 
-        
+        # --- LOOP 1: THE "WAIT" PHASE (Leaky Capacitor) ---
+        self.time_step = TIME_STEP_COARSE
         while self.time < MAX_SIM_TIME:
-            
-            # --- Check for the "Trigger" ---
-            jitter_kick = abs(random.uniform(-g_jitter, g_jitter))
-            if jitter_kick > SPIN_FLIP_BARRIER:
-                self.flare2_spin = -1  # Flip one spin
-                break # EXIT THE "WAIT" LOOP and proceed to the "Crash" phase
-                
-            # --- If no flip, just step time forward ---
+            # Calculate net charge
+            p_in = abs(random.uniform(-g_jitter, g_jitter))
+            p_out = g_leak
+            net_charge = p_in - p_out
+            if net_charge > 0:
+                self.flare_energy += net_charge
+            if self.flare_energy > CRASH_THRESHOLD:
+                # print(f"Ignition at time {self.time:.1f}s, entering crash phase.")
+                global g_repel
+                g_repel = 0.0
+                break
             self.time += self.time_step
-            
-            # --- Check for a "race" crash (This should never happen if balanced) ---
-            # This is a safety check. If this fires, our F_repel is wrong.
-            if self.distance() < COLLISION_DIST:
-                # This would be a "Run 1" style crash, which is a bug.
-                # print("DEBUG: 'RACE' CRASH DETECTED. FORCES UNBALANCED.")
-                return self.time 
         
-        # --- If we get here, one of two things happened:
-        # 1. We timed out (self.time >= MAX_SIM_TIME) and there was no decay.
-        # 2. The spin flipped (self.flare2_spin == -1) and we broke the loop.
+        if self.flare_energy <= CRASH_THRESHOLD:
+            return None  # No ignition
         
-        if self.flare2_spin != -1:
-            # We timed out. No decay.
-            return None 
-
-        print(f"Spin flipped at time {self.time:.1f}s, entering crash phase.")
-
-        # --- LOOP 2: THE "CRASH" PHASE (Fine Time Step) ---
-        # The spin has flipped! Now we "validate the mechanics"
-        
-        self.time_step = TIME_STEP_FINE # Switch to high-fidelity
-        
-        # Give the crash its *own* timeout (e.g., 10.0 second of sim time)
-        crash_timeout = self.time + 10.0 
-        
+        # --- LOOP 2: THE "CRASH" PHASE ---
+        self.time_step = TIME_STEP_FINE
+        crash_timeout = self.time + 10.0
         while self.time < crash_timeout:
-            
-            # --- Run the "full motion" mechanics ---
-            f1, f2 = self.forces()
-            self.vel1 += (f1 - g_drag * self.vel1) * self.time_step
-            self.vel2 += (f2 - g_drag * self.vel2) * self.time_step
-            self.pos1 = (self.pos1 + self.vel1 * self.time_step) % CIRCUMFERENCE
-            self.pos2 = (self.pos2 + self.vel2 * self.time_step) % CIRCUMFERENCE
-            self.time += self.time_step
-            
-            # --- THIS IS THE "CRASH" ---
+            self.step()
             if self.distance() < COLLISION_DIST:
-                return self.time  # SUCCESS! We have a mechanical decay time.
+                return self.time
+        
+        return None
 
-        # If we get here, the crash *failed* (e.g., f_drag was too high)
-        # print("DEBUG: 'CRASH' FAILED TO COLLIDE.")
-        return None # No decay (Crash timed out)
+def run_trial(_):
+    sim = NeutronSim()
+    return sim.run()
 
-# Autotune Function
-def autotune_params(target_half_life, num_trials=10, max_iter=100):
-    global SPIN_FLIP_BARRIER
-    best_error = float('inf')
-    best_barrier = SPIN_FLIP_BARRIER
-    
-    for iteration in range(max_iter):
-        decay_times = []
-        for trial in range(num_trials):
-            sim = NeutronSim()
-            decay_time = sim.run()
+if __name__ == '__main__':
+    # --- MAIN EXECUTION ---
+    print(f"Running Ignition Model simulation with {NUM_TRIALS_FULL} trials...")
+    decay_times = []
+    progress_interval = NUM_TRIALS_FULL / 10
+    next_progress = progress_interval
+
+    start_time = time.time()
+    last_update_time = start_time
+
+    # Use multiprocessing to parallelize
+    num_cores = multiprocessing.cpu_count()
+    print(f"Using {num_cores} CPU cores for parallel processing.")
+
+    with multiprocessing.Pool(processes=num_cores) as pool:
+        results = pool.imap_unordered(run_trial, range(NUM_TRIALS_FULL))
+        
+        for i, decay_time in enumerate(results):
             if decay_time is not None:
                 decay_times.append(decay_time)
+            current_time = time.time()
+            if i >= next_progress or (current_time - last_update_time) >= 15:
+                progress_pct = int((i / NUM_TRIALS_FULL) * 100)
+                if decay_times:
+                    min_dt = np.min(decay_times)
+                    mean_dt = np.mean(decay_times)
+                    max_dt = np.max(decay_times)
+                    print(f"Progress: {progress_pct}% complete - Decays: {len(decay_times)}, Min: {min_dt:.2e}s, Mean: {mean_dt:.2e}s, Max: {max_dt:.2e}s")
+                else:
+                    print(f"Progress: {progress_pct}% complete - No decays yet")
+                next_progress += progress_interval
+                last_update_time = current_time
+
+    # --- ANALYSIS ---
+    end_time = time.time()
+    print(f"Simulation finished in {end_time - start_time:.2f} seconds.")
+
+    if decay_times:
+        half_life_sim = np.median(decay_times)
+        print(f"Simulated Half-Life: {half_life_sim / 60:.2f} minutes")
+        print(f"Target: {HALF_LIFE_TARGET / 60:.2f} minutes")
+        error = abs(half_life_sim - HALF_LIFE_TARGET) / HALF_LIFE_TARGET * 100
+        print(f"Error: {error:.2f}%")
         
-        if decay_times:
-            sim_half_life = np.median(decay_times)
-            error = abs(sim_half_life - target_half_life) / target_half_life
-            if error < best_error:
-                best_error = error
-                best_barrier = SPIN_FLIP_BARRIER
-                print(f"Iter {iteration}: Half-Life {sim_half_life/60:.2f} min, Error {error*100:.2f}%")
-        
-        # Adjust barrier randomly (simple hill-climbing)
-        SPIN_FLIP_BARRIER *= random.uniform(0.99, 1.01)
-    
-    SPIN_FLIP_BARRIER = best_barrier
-    print(f"Autotuned Barrier: {SPIN_FLIP_BARRIER:.2e}")
-
-# Run Autotune
-# print("Autotuning parameters over 10 trials...")
-autotune_params(HALF_LIFE_TARGET, NUM_TRIALS_BASE)
-
-# Now run full simulation with tuned params
-print("Running full simulation with 25 trials...")
-decay_times = []
-progress_interval = NUM_TRIALS_FULL / 10  # Heartbeat every 10%
-next_progress = progress_interval
-start_time = time.time()
-last_time_progress = start_time
-for trial in range(NUM_TRIALS_FULL):
-    if trial >= next_progress:
-        print(f"Full sim progress: {int((trial / NUM_TRIALS_FULL) * 100)}% complete")
-        next_progress += progress_interval
-    if time.time() - last_time_progress > 15:
-        print(f"Time progress: {time.time() - start_time:.1f} seconds elapsed")
-        last_time_progress = time.time()
-    sim = NeutronSim()
-    decay_time = sim.run()
-    if decay_time is not None:
-        decay_times.append(decay_time)
-
-# Analyze results
-if decay_times:
-    half_life_sim = np.median(decay_times)
-    print(f"Full Sim Half-Life: {half_life_sim / 60:.2f} minutes")
-    print(f"Target: {HALF_LIFE_TARGET / 60:.2f} minutes")
-    print(f"Error: {abs(half_life_sim - HALF_LIFE_TARGET) / HALF_LIFE_TARGET * 100:.2f}%")
-
-    # Plot histogram
-    plt.hist(decay_times, bins=50, alpha=0.7, label='Decay Times')
-    plt.axvline(HALF_LIFE_TARGET, color='red', linestyle='--', label='Target Half-Life')
-    plt.xlabel('Time (seconds)')
-    plt.ylabel('Frequency')
-    plt.title('Neutron Decay Simulation: 25 Trials')
-    plt.legend()
-    plt.savefig('neutron_decay_histogram_50k.png')
-    plt.show()
-else:
-    print("No decays - params need further tuning!")
+        plt.hist(decay_times, bins=50, alpha=0.7, label='Decay Times')
+        plt.axvline(half_life_sim, color='orange', linestyle='--', label=f'Sim: {half_life_sim/60:.2f} min')
+        plt.axvline(HALF_LIFE_TARGET, color='red', linestyle='--', label='Target: 15.00 min')
+        plt.xlabel('Time (seconds)')
+        plt.ylabel('Frequency')
+        plt.title(f'Ignition Model: {len(decay_times)} Decays')
+        plt.legend()
+        plt.savefig('ignition_model_histogram.png')
+        plt.show()
+    else:
+        print("No decays - adjust CRASH_THRESHOLD")
