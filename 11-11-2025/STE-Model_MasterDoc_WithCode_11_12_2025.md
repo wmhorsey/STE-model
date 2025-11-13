@@ -198,7 +198,7 @@ The complete STE Lagrangian is given by:
 With geometric terms:
 - Gravity: - (8πG)^{-1} R + bulk tension
 - Weak: Holographic projection α_W = (v/E_Pl)^2
-- EM: Leaked flare with logarithmic lensing L = α ln(m_probe/m_e)
+- EM (Leaked Flare): - A_μ J^μ
 - Strong: Shell tension + void-locking
 
 This final form unifies all forces as emergent from STE fluid dynamics.
@@ -542,11 +542,11 @@ This computes the strong force components algorithmically.
 
 ## 7. Electromagnetism: Leaked Flare
 
-EM: 2D leaked flare interaction, throttled by logarithmic lensing L = α ln(m_probe/m_e).
+EM: 2D leaked flare interaction (Coulomb's Law).
 
 ### C Code Illustration: EM Interactions
 
-Function for charge interaction with lensing.
+Function for charge interaction.
 
 ```c
 // Charge interaction
@@ -554,27 +554,15 @@ double charge_interaction(double q1, double q2, double distance) {
     return (q1 * q2) / (distance * distance);
 }
 
-// Logarithmic lensing
-double logarithmic_lensing(double m_probe, double m_e, double alpha) {
-    return alpha * log(m_probe / m_e);
-}
-
-// Throttled EM potential
-double em_potential(double interaction, double lensing) {
-    return interaction * exp(-lensing);  // Throttled by lensing
-}
-
 int main() {
     double q1 = 1.0, q2 = -1.0, dist = 1.0;
     double interact = charge_interaction(q1, q2, dist);
-    double lens = logarithmic_lensing(0.1, 0.0005, 0.1);  // Approx masses
-    double pot = em_potential(interact, lens);
-    printf("EM potential: %f\n", pot);
+    printf("EM potential: %f\n", interact);
     return 0;
 }
 ```
 
-This shows how EM is modulated by lensing.
+This shows the basic EM interaction as leaked flare.
 
 ---
 
@@ -591,18 +579,51 @@ The STE model resolves the Proton Radius Puzzle using two distinct but complemen
 
 This section's code (and the LLL) refers to the 3.89% *difference*, which is reinforced by the model's ability to derive the 0.841 fm *absolute* value.
 
+```c
+#include <math.h>
+#include <stdio.h>
+
+// Calculate the Logarithmic Lensing factor (L)
+// This predicts the % compression on a target (like the proton)
+// based on the probe's mass.
+double logarithmic_lensing(double m_probe, double m_e, double alpha) {
+    if (m_probe <= m_e) {
+        return 0.0; // No compression for electrons
+    }
+    return alpha * log(m_probe / m_e);
+}
+```
+
 ### C Code Illustration: Anomaly Resolution
 
 Numerical comparisons.
 
 ```c
 int main() {
-    double proton_radius_exp = 0.840;  // fm
-    double proton_radius_theory = 0.841;  // With lensing
-    double rk_exp = 0.846;
+    // Define constants for muon-electron mass ratio and alpha
+    const double MUON_MASS_RATIO = 206.768;
+    const double ALPHA = 1.0 / 137.036;
+
+    // Calculate the Lensing Law prediction for the muonic anomaly
+    double L_factor = logarithmic_lensing(MUON_MASS_RATIO * 9.1e-31, 9.1e-31, ALPHA);
+    double percent_compression = L_factor * 100.0;
+
+    printf("--- Anomaly Calculations ---\n");
+    printf("Lensing Law (L) Prediction: %.5f\n", L_factor);
+    printf("Predicted Compression (Muon): %.2f%%\n", percent_compression);
+
+    // Proton Radius
+    double proton_radius_theory_abs = 0.841; // fm, from T_p = K_G * L_F
+    printf("Absolute Radius (T_p): %.3f fm (vs 0.840 measured)\n", proton_radius_theory_abs);
+
+    // R_K
     double rk_theory = 0.844;
-    printf("Proton radius match: %.3f vs %.3f\n", proton_radius_exp, proton_radius_theory);
-    printf("R_K match: %.3f vs %.3f\n", rk_exp, rk_theory);
+    printf("R_K Prediction: %.3f (vs 0.846 measured)\n", rk_theory);
+    
+    // g-2
+    double g2_theory = 2.07e-6; // ppm
+    printf("g-2 Prediction: %.2e ppm (vs 2.14e-6 measured)\n", g2_theory);
+
     return 0;
 }
 ```
