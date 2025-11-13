@@ -295,87 +295,113 @@ This simulates hadron formation and stability based on quark composition.
 
 ---
 
-## 4a. Neutron Storm Buffer: The Lightning Inside the Shell
+## 4a. Proton–Neutron Field Architecture: Spacer and Spray Nozzle
 
-The neutron is not inert. It is an **unstable source engine** that acts as a **field stabilizer** in chaotic environments. In a lightning storm analogy, protons spike and electrons scatter, but neutrons absorb and redistribute tension, preventing runaway chirality collapse.
+- **Protons:**  
+  Dual‑intake engines with collective spikes. They define the **field polarization** — the “shape” of the local STE tension.
 
-- **Proton (uud):** Dual-intake engine with collective spike.  
-- **Neutron (udd):** Source engine, unstable, but capable of buffering field tension.  
-- **Lightning storm analogy:**  
-  - Protons = spikes of charge/tension.  
-  - Electrons = scatter discharge.  
-  - Neutrons = stabilizers, absorbing bulk tension and redistributing it across shells.
+- **Neutrons:**  
+  Not independent stabilizers, but **conforming partners**.  
+  - They align to the proton’s polarization.  
+  - They act as **spacers**, keeping void shells from collapsing inward.  
+  - They act as **spray nozzles**, redistributing tension outward to prevent runaway flare.
 
-### Conceptual Notes
-- Neutrons are **shell interfaces**: they don’t just sit in nuclei, they actively **shape field tension**.  
-- In high-energy storms (plasma discharges, cosmic rays), neutrons act as **buffers** that prevent runaway collapse.  
-- This explains why neutron-rich environments (supernova cores, lightning channels) exhibit unique field behaviors.
+- **Together:**  
+  Proton–neutron pairs form a **field lattice**, shaping and holding the nucleus.  
+  The neutron’s role is to **extend and stabilize the proton’s architecture**, not to invent its own.
 
 ---
 
-### C Code Illustration: Neutron Storm Buffer Simulation
+### Neutron Stars: Storm Without Control
+- In neutron stars, the balance is broken.  
+- With no protons to define polarization, neutrons lose their “conforming anchor.”  
+- The result: **chaotic storm patterns**, tension flows that go where they will, producing unique field geometries and extreme anomalies.  
+- This explains why neutron stars exhibit unpredictable magnetic fields, crust fractures, and storm‑like resonance signatures.
+
+---
+
+### C Code Illustration: Proton–Neutron Coupling
+
+```c
+typedef struct {
+    double polarization;  // proton-defined field shape
+    double spike_energy;
+} Proton;
+
+typedef struct {
+    double conform_factor; // how well neutron conforms to proton
+    double spacing;        // spacer effect
+    double spray;          // nozzle redistribution
+} Neutron;
+
+// Neutron conforms to proton polarization
+double neutron_conform(Proton p, Neutron n) {
+    return p.polarization * n.conform_factor;
+}
+
+// Combined field stability
+double combined_stability(Proton p, Neutron n) {
+    double conform = neutron_conform(p, n);
+    return p.spike_energy + n.spacing + n.spray + conform;
+}
+
+int main() {
+    Proton p = {1.0, 0.8};
+    Neutron n = {0.9, 0.5, 0.4};
+    printf("Combined stability: %.3f\n", combined_stability(p, n));
+    return 0;
+}
+```
+
+This models the neutron as a **conforming stabilizer** that amplifies proton polarization while adding spacing and redistribution effects.
+
+---
+
+### Visualization Anchor
+Protons carve the field’s shape.  
+Neutrons slip into that shape, spacing the shells, spraying tension outward.  
+Together they form the nucleus — an engine lattice.  
+But strip away the protons, and the neutrons storm unchecked, the field roaring wherever it will.
+
+---
+
+## 4c. Neutron Star Patterns: Chaotic Field Geometries
+
+Without protons to define polarization, neutron stars exhibit chaotic tension flows. This leads to unpredictable magnetic fields, crust fractures, and resonance signatures that can be modeled as unconstrained storm patterns.
+
+### C Code Illustration: Chaotic Storm Simulation
+
+Simulating tension flows in a proton-free environment.
 
 ```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-// Simplified neutron buffer model
-typedef struct {
-    double stability;   // neutron stability factor
-    double tension_absorb; // ability to absorb field tension
-} Neutron;
-
-typedef struct {
-    double spike_energy; // proton spike
-    double scatter_energy; // electron scatter
-} Storm;
-
-// Function: neutron absorbs tension from storm
-double absorb_tension(Neutron n, Storm s) {
-    double absorbed = n.tension_absorb * (s.spike_energy + s.scatter_energy);
-    return absorbed * n.stability;
-}
-
-// Function: redistribute absorbed tension
-double redistribute_tension(double absorbed, double redistribution_factor) {
-    return absorbed * redistribution_factor;
+// Simulate chaotic tension flow in neutron star
+double chaotic_flow(double initial_tension, int steps) {
+    double tension = initial_tension;
+    srand(time(NULL));
+    for (int i = 0; i < steps; i++) {
+        double random_factor = (double)rand() / RAND_MAX * 2.0 - 1.0;  // -1 to 1
+        tension += random_factor * 0.1;  // Unconstrained variation
+        if (tension < 0) tension = 0;  // Prevent negative
+    }
+    return tension;
 }
 
 int main() {
-    srand(time(NULL));
-    Neutron n = {0.8, 0.6};  // moderately stable neutron
-    Storm storm = {1.0, 0.5}; // spike + scatter energies
-
-    double absorbed = absorb_tension(n, storm);
-    double redistributed = redistribute_tension(absorbed, 0.7);
-
-    printf("Absorbed tension: %.3f\n", absorbed);
-    printf("Redistributed tension: %.3f\n", redistributed);
+    double final_tension = chaotic_flow(1.0, 100);
+    printf("Final chaotic tension: %.3f\n", final_tension);
     return 0;
 }
 ```
 
-This simulation shows how neutrons can absorb and redistribute tension in a “storm” environment, stabilizing the field.
+This illustrates how tension flows randomly without proton anchors, mimicking neutron star anomalies.
 
 ---
 
-### Engineering Implications
-- **Neutron bottles** are not traps but **field wells** — they gather and redistribute tension.  
-- **Lightning channels** can be modeled as proton/electron spikes buffered by neutron shells.  
-- **Detection chambers** may use neutron analogs (unstable source engines) to stabilize and measure STE spikes.
-
----
-
-### Visualization Anchor
-A storm rages.  
-Protons spike, electrons scatter.  
-The neutron hums — absorbing, redistributing, stabilizing.  
-It is not neutral. It is the **storm’s hidden conductor**.
-
----
-
-## 4b. Variable‑c Diagnostic: Light Delay as Field Probe
+## 4d. Variable‑c Diagnostic: Light Delay as Field Probe
 
 Building on the neutron storm buffer, where tension is absorbed and redistributed, we can diagnose STE field density by measuring light delay. Increasing STE density slows light, providing a direct probe of local tension.
 
