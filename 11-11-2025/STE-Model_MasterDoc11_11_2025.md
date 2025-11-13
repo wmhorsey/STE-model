@@ -152,6 +152,14 @@ The Photon (The "Energy Side"): The photon is a transient, propagating 'ripple' 
 
 The electron (vortex) and photon (ripple) are 'too intertwined to really separate' because the vortex is the source of the ripples (virtual photons) it sheds, providing a physical mechanism for particle-wave duality.
 
+### The "STE Remnant" (The "Exhaust Soup")
+
+The universe is filled with transient, mass-gaining "remnants" (droplets) that are the "exhaust" from all energy processes (from protons to GRBs). This "soup" is the "Contaminated STE Cloud." It provides the physical medium for the "electron whirlpool."
+
+### The "Coherent Atomic Model"
+
+The atom is a single, fluid-dynamic system. The proton "engine" and the electron "whirlpool" "move together" because the engine "drags" its own "exhaust plume" (the "contaminated cloud"), which is the very medium the "whirlpool" exists in.
+
 ---
 
 ## 11. Emergent Layers: Chemistry, Biology, & Consciousness
@@ -174,9 +182,53 @@ Flatness: 2D genesis plane.
 
 Dark energy: Ambient fluid pressure.
 
+### The STE Cosmic Energy Cycle
+
+The STE model provides a complete, closed loop for energy in the universe, recycled at the cosmic level:
+
+**Phase 1: Condensation (Lensing)**  
+Ambient 3D STE fluid "condenses" or is "lensed" onto 2D void-shells.  
+Result: Mass (protons, etc.) is created.  
+STE → Matter
+
+**Phase 2: Conversion (Flares & Bursts)**  
+Matter interacts, decays, or annihilates.  
+Result: Bound energy is released as "ripples" on the STE fluid—from photons to massive Gamma-Ray Bursts (GRBs).  
+Matter → EM Radiation
+
+**Phase 3: Dissipation (Spreading & Drag)**  
+The GRB "tsunami" travels across the cosmos. As it travels, it interacts with the fluid, experiencing "Redshift as Drag". This is a gradual energy loss, "leaking" energy back to the ambient fluid.
+
+**Phase 4: Re-absorption (The "Unwinding" Threshold)**  
+A "ripple" (photon) can't travel forever. After losing enough energy via "drag," it hits a critical threshold. At this point, it can no longer propagate. It "collapses" or "unwinds," "dumping" its remaining energy back into the 3D bulk STE fluid.  
+Result: The energy cycle completes.  
+EM Radiation → STE
+
+### The "Engine Fuel Cycle"
+
+Matter "engines" (protons, black holes) are not static. They "consume" the bulk STE fluid as "fuel" and "exhaust" these "remnants" as a "cost".
+
+Zero-Point Energy: This "exhaust" is the "thermal jitter at 0k".
+
+Hawking Radiation: This is the same "exhaust" mechanism, just scaled up for a black hole.
+
+### The "Cosmic Recycling Loop" (The Grand Equilibrium)
+
+These remnants are the key to the universe's dynamics.
+
+Redshift as Drag: Photons ("ripples") lose energy by "shaking" and "unwinding" these remnants as they travel.
+
+Dark Energy: The cumulative, positive "exhaust pressure" from all "engines" is Dark Energy, "enforcing the STE field's expansion" and balancing gravity's "collapse".
+
+Lensing Law Mechanism: The anomalies are caused by heavy particles (like the muon) "dragging" on this dense "remnant cloud" local to the proton "engine".
+
+### "Gravitational Throttling" (Time Dilation)
+
+In a "tighter" (denser ρ) STE field, the "engine" must "work harder" to "pull in fuel". This "throttles" its entire internal process (exhaust rate, electron whirlpool speed), which is the physical mechanism for gravitational time dilation.
+
 ---
 
-## 12. Simulation Roadmap
+## 13. Simulation Roadmap
 
 Neutron decay: 1D "Ignition Model" sim. Validate that a "Leaky Capacitor" (P_in from g_jitter vs. P_out from g_leak) "charges up" (flare_energy) to a CRASH_THRESHOLD, matching the 15-minute half-life.
 
