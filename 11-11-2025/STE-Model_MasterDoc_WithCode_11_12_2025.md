@@ -149,40 +149,74 @@ Forces emerge geometrically:
 
 ### C Code Illustration: Force Calculations
 
-Functions to compute each force potential.
+Unified Fluid Engine implementing Imbalance from Ambient logic.
 
 ```c
+#include <stdio.h>
 #include <math.h>
 
-// Gravity: 3D bulk tension
-double gravity_potential(double rho, double grad_rho) {
-    return rho * grad_rho;  // Simplified
+// The STE Fluid: The substrate of reality
+typedef struct {
+    double rho_ambient;  // The "Real 0" (Vacuum/Neutrino background)
+    double rho_local;    // The local density (e.g., inside an electron)
+    double rho_higgs;    // The saturation point (246 GeV scale)
+} STE_Fluid;
+
+// 1. WEAK FORCE: The Information Entropy of the Fluid
+// Formal Lagrangian: -alpha_W * rho * ln(rho / rho_ambient)
+// Insight: Energy cost of deviating from the "True Zero" (Ambient)
+double weak_potential(STE_Fluid ste, double alpha_W) {
+    if (ste.rho_local <= 0) return 0.0; // Safety for voids
+    
+    // The "Imbalance": How surprised is the fluid?
+    // If rho_local == rho_ambient, log(1) = 0 (True Zero Potential)
+    double imbalance = log(ste.rho_local / ste.rho_ambient);
+    
+    return -alpha_W * ste.rho_local * imbalance; 
 }
 
-// Weak: Holographic projection
-double weak_potential(double v, double E_Pl) {
-    double alpha_W = (v / E_Pl) * (v / E_Pl);
-    return alpha_W;  // Coupling strength
+// 2. GRAVITY: 3D Bulk Tension
+// Formal Lagrangian: -1/2 * (rho^2 / rho_higgs)
+// Insight: The bulk stress of the fluid itself
+double gravity_potential(STE_Fluid ste) {
+    // Tension scales with the square of density relative to the Higgs limit
+    return -0.5 * (ste.rho_local * ste.rho_local) / ste.rho_higgs;
 }
 
-// EM: Logarithmic lensing
-double em_potential(double m_probe, double m_e, double alpha) {
-    return alpha * log(m_probe / m_e);
-}
-
-// Strong: Shell tension (simplified)
-double strong_potential(double shell_tension, double flare_quench) {
-    return shell_tension + flare_quench;
-}
-
-// Total Lagrangian approximation
-double lagrangian(double T, double V_grav, double V_weak, double V_em, double S) {
-    return T - V_grav - V_weak - V_em - S;
+// 3. KINETIC TERM: The Flow
+// Formal Lagrangian: 1/2 * rho * (d_phi/dt)^2
+double kinetic_term(STE_Fluid ste, double flow_velocity) {
+    return 0.5 * ste.rho_local * flow_velocity * flow_velocity;
 }
 
 int main() {
-    double T = 1.0, Vg = 0.1, Vw = 0.01, Ve = 0.05, S = 0.02;
-    printf("Lagrangian: %f\n", lagrangian(T, Vg, Vw, Ve, S));
+    // --- SIMULATION PARAMETERS ---
+    // rho_ambient = 1.0 (The "True Zero")
+    // rho_higgs = 1000.0 (The Limit)
+    STE_Fluid universe = {1.0, 0.0, 1000.0}; 
+    
+    // CONSTANTS (Derived from your Holographic principle)
+    double alpha_W = 4.06e-34; // (v / E_Pl)^2
+    
+    printf("--- STE FLUID DIAGNOSTIC ---\n");
+
+    // Case A: True Vacuum (Ambient)
+    universe.rho_local = 1.0; 
+    printf("State: Ambient Vacuum (rho=1.0)\n");
+    printf("  Weak Potential (Entropy): %.2e (TRUE ZERO)\n", weak_potential(universe, alpha_W));
+
+    // Case B: The Electron (Compression)
+    // Estimated ~15% compression over ambient -> rho ~ 1.15
+    universe.rho_local = 1.15; 
+    printf("State: Electron Cloud (rho=1.15)\n");
+    printf("  Weak Potential (Entropy): %.2e (The 'Standard' Cost)\n", weak_potential(universe, alpha_W));
+
+    // Case C: The Void (Suction)
+    // Density drops below ambient -> rho ~ 0.1
+    universe.rho_local = 0.1;
+    printf("State: Chiral Void (rho=0.1)\n");
+    printf("  Weak Potential (Entropy): %.2e (Negative = Suction)\n", weak_potential(universe, alpha_W));
+
     return 0;
 }
 ```
