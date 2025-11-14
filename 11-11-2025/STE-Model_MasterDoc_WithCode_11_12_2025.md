@@ -367,7 +367,7 @@ This simulates hadron formation and stability based on quark composition.
   Dual‑intake engines with collective spikes. They define the **field polarization** — the “shape” of the local STE tension.
 
 - **Neutrons:**  
-  Not independent stabilizers, but **conforming partners**.  
+  Unstable when free, they become crucial **conforming partners** when bound in a nucleus. Their stability and function depend on the proton's polarizing field.
   - They align to the proton’s polarization.  
   - They act as **spacers**, keeping void shells from collapsing inward.  
   - They act as **spray nozzles**, redistributing tension outward to prevent runaway flare.
