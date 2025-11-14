@@ -57,11 +57,13 @@ The universe is a single STE fluid with ambient density ρ_ambient. Dynamics gov
 
 The only stable anchor is the Chiral Void: a region of ρ ≈ 0 with handedness (left for matter, right for antimatter). Handedness defines charge; suction (density gradient) defines mass.
 
-### The Principle of Acquisitive Potential
+### The Sole Fundamental Rule: Acquisitive Potential
 
-The STE field is governed by a primary, foundational drive known as **Acquisitive Potential**: a fundamental property where a region's potential to draw energy from its surroundings is directly proportional to its own energy density. This creates a local, positive-feedback loop, causing energy to flow from lower-density regions to higher-density ones. This "energy theft" is the primordial engine of gravity.
+The STE field is governed by one, and only one, fundamental rule: **Acquisitive Potential**. This is the intrinsic property where a region's potential to draw energy from its surroundings is directly proportional to its own energy density. This creates a local, positive-feedback loop—a "winner-take-all" system where energy relentlessly flows from lower-density regions to higher-density ones. This "energy theft" is the primordial engine of gravity and the foundational mechanism for all structure.
 
-This principle is the reason Chiral Voids are stable. The shell of the void, possessing immense energy density, has a near-infinite Acquisitive Potential relative to the space inside it. It relentlessly and continuously "steals" any energy that might manifest within the void, enforcing a state of ρ ≈ 0. The void doesn't just *happen* to be empty; it is actively and perpetually *kept* empty by the shell's insatiable acquisitive nature.
+From this single rule, all other physics emerges:
+- **Tension:** When regions of equal Acquisitive Potential exist in proximity, their attempts to "steal" energy from each other result in a balanced stalemate. This state of equilibrium is **tension**. A uniform field is not placid; it is a state of maximum tension.
+- **Chiral Voids:** The stability of a void is a direct consequence of this rule. The void's shell, possessing immense energy density, has a near-infinite Acquisitive Potential relative to the space inside it. It relentlessly and continuously "steals" any energy that might manifest within the void, enforcing a state of ρ ≈ 0. The void doesn't just *happen* to be empty; it is actively and perpetually *kept* empty by the shell's insatiable acquisitive nature.
 
 ### C Code Illustration: Basic STE Fluid Simulation
 
