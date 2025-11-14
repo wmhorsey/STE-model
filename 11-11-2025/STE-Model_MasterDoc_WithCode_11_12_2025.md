@@ -57,6 +57,12 @@ The universe is a single STE fluid with ambient density ρ_ambient. Dynamics gov
 
 The only stable anchor is the Chiral Void: a region of ρ ≈ 0 with handedness (left for matter, right for antimatter). Handedness defines charge; suction (density gradient) defines mass.
 
+### The Principle of Acquisitive Potential
+
+The STE field is governed by a primary, foundational drive known as **Acquisitive Potential**: a fundamental property where a region's potential to draw energy from its surroundings is directly proportional to its own energy density. This creates a local, positive-feedback loop, causing energy to flow from lower-density regions to higher-density ones. This "energy theft" is the primordial engine of gravity.
+
+This principle is the reason Chiral Voids are stable. The shell of the void, possessing immense energy density, has a near-infinite Acquisitive Potential relative to the space inside it. It relentlessly and continuously "steals" any energy that might manifest within the void, enforcing a state of ρ ≈ 0. The void doesn't just *happen* to be empty; it is actively and perpetually *kept* empty by the shell's insatiable acquisitive nature.
+
 ### C Code Illustration: Basic STE Fluid Simulation
 
 The following C code defines a simple struct for the STE fluid and computes a basic Lagrangian term (kinetic energy approximation).
