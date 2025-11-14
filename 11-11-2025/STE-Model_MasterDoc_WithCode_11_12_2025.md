@@ -7,15 +7,15 @@
 
 ## Abstract
 
-The STE model unifies all four fundamental forces, particles, and anomalies as emergent properties of a single SpaceTime Energy (STE) fluid. The universe is a fluid with ambient density ρ_ambient, governed by a Lagrangian ℒ_STE summing kinetic/field, gravity, weak, electromagnetic, and scalar terms. The only stable anchor is the Chiral Void (ρ ≈ 0), with handedness defining charge and suction defining mass.
+The STE model unifies all four fundamental forces, particles, and anomalies as emergent properties of a single SpaceTime Energy (STE) fluid. The universe is governed by one fundamental rule: **Acquisitive Potential**, where regions of higher energy density relentlessly draw energy from regions of lower density. This "energy theft" is the primordial engine of gravity.
 
 Particles are Chiral Voids: Left-handed (matter) or right-handed (antimatter). Quarks are not particles but emergent flow patterns: up quarks as stable void cores (intakes), down quarks as metastable flares/spikes (exhausts). The proton (uud) is a dual-intake engine with a collective spike; the neutron (udd) is an unstable source engine.
 
 Forces emerge geometrically:
-- Gravity: 3D bulk tension.
+- Gravity: The macroscopic effect of the field's Acquisitive Potential.
 - Strong: 2D shell tension + void-locking/flare-quenching.
 - Weak: 3D→2D holographic projection (α_W = (v/E_Pl)^2).
-- EM: 2D→2D leaked flare interaction, throttled by logarithmic lensing (L = α ln(m_probe/m_e)).
+- EM: 2D→2D leaked flare interaction.
 
 Anomalies resolved: Proton radius (3.89% vs. 3.80%), R_K (0.844 vs. 0.846), muon g-2 (2.07 ppm vs. 2.14 ppm). Baryogenesis via chiral selection. Cosmology: Flatness from 2D genesis plane.
 
@@ -242,7 +242,7 @@ The complete STE Lagrangian is given by:
 ℒ_STE = ∫ d^4x [ (1/2) ∂_μ φ ∂^μ φ - (1/2) m^2 φ^2 - λ φ^4 + kinetic terms for STE fluid ]
 
 With geometric terms:
-- Gravity: - (8πG)^{-1} R + bulk tension
+- Gravity: The macroscopic effect of the field's Acquisitive Potential
 - Weak: Holographic projection α_W = (v/E_Pl)^2
 - EM (Leaked Flare): - A_μ J^μ
 - Strong: Shell tension + void-locking
@@ -768,7 +768,7 @@ C-based simulations.
 typedef struct {
     double radius;          // The Size of the Void Shell
     double shell_tension;   // The Energy in the Boundary Layer (Sigma)
-    double ambient_pressure;// The Universe Pushing In (Relentless Suction)
+    double acquisitive_potential_ambient; // The Universe's net Acquisitive Potential
     double velocity;        // Speed of Collapse (dr/dt)
     double cp_bias;         // Emergent CP violation for asymmetry (e.g., 1e-10)
 } Void_Shell;
@@ -786,10 +786,10 @@ double tension_force(double tension, double radius, double cp_bias) {
     return (tension / radius) * (1.0 + cp_bias); // Slight bias for matter
 }
 
-// 3. AMBIENT FORCE (The Ocean)
-// The uniform pressure of the STE Fluid.
-double ambient_force(double pressure) {
-    return pressure;
+// 3. AMBIENT FORCE (The Universe's Acquisitive Potential)
+// The net "theft" of energy from the surrounding field.
+double ambient_force(double potential) {
+    return potential;
 }
 
 // 4. GEOMETRIC LIMIT (The Void Core Shell)
@@ -840,7 +840,7 @@ int main() {
         // A. CALCULATE FORCES (All acting on the Boundary)
         double F_inside  = internal_force(); // 0.0
         double F_tension = tension_force(atom.shell_tension, atom.radius, atom.cp_bias);
-        double F_ambient = ambient_force(atom.ambient_pressure);
+        double F_ambient = ambient_force(atom.acquisitive_potential_ambient);
         double F_resist  = structural_resistance(atom.radius, LIMIT_RADIUS); // Check against CORE
         double F_visc    = viscosity_damping(atom.velocity, density_scale); 
         double F_dil     = dilation_factor(atom.radius, LIMIT_RADIUS); 
