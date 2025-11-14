@@ -29,6 +29,7 @@ This document includes C code snippets to illustrate the algorithmic underpinnin
 
 ## Table of Contents
 
+STE Rosetta Stone: Glossary
 1. Core Axiom: STE Fluid & Chiral Void
 2. Lagrangian & Forces
 3. Particles: Voids, Spikes, and Plumbing
@@ -48,6 +49,23 @@ This document includes C code snippets to illustrate the algorithmic underpinnin
 17. Conclusion
 18. Key Insights and Engineering Implications
 19. Supplemental Engineering & Experimental Concepts
+
+---
+
+## STE Rosetta Stone: Glossary
+
+To eliminate ambiguity, this glossary maps STE terms to their precise meanings within the Two-Layer Logic.
+
+### Layer 1: The Substrate (The Cause)
+**Acquisitive Potential**: The fundamental "energy theft" rule of the STE fluid; the primordial engine from which all forces emerge. Regions of higher energy density relentlessly draw energy from regions of lower density, creating a positive-feedback loop.
+
+### Layer 2: The Structure (The Effect)
+**Chiral Void**: The stable, left-handed $\rho \approx 0$ region that forms the core of matter (e.g., up quark). Handedness defines charge; density gradient defines mass.
+**"Polluted" Field (Electron Cloud)**: A localized, compressed, "contaminated" region of the STE fluid that we measure as a particle. Emergent from Acquisitive Potential gradients.
+**Gravity**: The emergent, macroscopic 3D interaction between the Acquisitive Potential gradients of Layer 2 structures (e.g., planetary orbits, galaxy clusters).
+**Tension**: The 2D surface properties of void shells, governing shell stability and flare containment (e.g., strong force in protons).
+**Pressure**: The emergent 3D bulk compression within Layer 2 structures, arising from Acquisitive Potential imbalances (e.g., neutron star cores).
+**Logarithmic Lensing Law ($\mathcal{L}$)**: The geometric compression factor governing how Layer 2 structures interact (e.g., muon-proton binding, anomaly resolution).
 
 ---
 
@@ -153,7 +171,7 @@ This simulates how density diffuses, illustrating void stability.
 
 ℒ_STE = T_kin/field - V_grav - V_weak - V_em - S_scalar
 
-Forces emerge geometrically:
+Forces emerge geometrically from the Acquisitive Potential rule:
 - Gravity: 3D bulk tension ∝ ρ ∇ρ
 - Weak: Holographic 3D→2D projection, α_W = (v / E_Pl) * (v / E_Pl)
 - EM: Logarithmic lensing
@@ -908,7 +926,29 @@ double cavitation_energy(double transducer_freq) {
 
 ## 19. Supplemental Engineering & Experimental Concepts
 
+### Verifiable Predictions for Experimental Validation
+
+1. **Variable-c Chamber Prediction:** In a chamber with tunable STE density (via piezoelectric compression), photon transit time will increase by at least 1 ppm per 10% density increase above ambient. Falsifiable: No delay observed in vacuum controls.
+
+2. **Gravity Well Spike Generator Prediction:** Compression-induced spikes will produce measurable gravitational anomalies (e.g., 10^{-12} m/s² perturbations) detectable by interferometry. Falsifiable: Spikes fail to alter local gravity fields.
+
+3. **Quartz Rod Resonance Prediction:** Harmonic pulses through quartz rods will exhibit frequency-dependent damping, with Q-factors dropping 20% at resonant frequencies matching neutron decay harmonics (~1.3 GHz). Falsifiable: Uniform damping across all frequencies.
+
+4. **CP Bias Asymmetry Prediction:** Matter-antimatter ratios in controlled void collapse simulations will show 1 part in 10^9 excess matter, matching observed baryogenesis. Falsifiable: Symmetric collapse in unbiased trials.
+
 ### 17.1 Variable‑c Chamber: Light Delay as Field Diagnostic
+Increasing STE density slows light. A chamber tuned for variable tension can measure photon delay as a direct probe of local field density.
+
+```c
+// Measure light delay through a variable STE density zone
+double light_delay(double rho_density, double baseline_c) {
+    // Effective speed of light decreases with density
+    double c_eff = baseline_c / (1.0 + rho_density);
+    return (baseline_c - c_eff) / baseline_c;  // Fractional delay
+}
+```
+
+---
 Increasing STE density slows light. A chamber tuned for variable tension can measure photon delay as a direct probe of local field density.
 
 ```c
@@ -923,7 +963,7 @@ double light_delay(double rho_density, double baseline_c) {
 ---
 
 ### 17.2 A–B Gravity Well Spike Generator
-Compression of a sample (A) induces a local spike; a test lead (B) detects chirality pull.
+Compression of a sample (A) induces a local spike; a test lead (B) detects chirality pull. Prediction: Spike generation will correlate with muon capture rates, increasing by 5% in compressed samples.
 
 ```c
 // Simulate spike probability from compression
@@ -941,7 +981,7 @@ double test_lead_pull(double spike_prob, double sensitivity) {
 ---
 
 ### 17.3 Quartz Rod Resonance Processor
-Quartz rod driven by transducers, surrounded by copper rings separated by graphene‑plated silicon spacers.
+Quartz rod driven by transducers, surrounded by copper rings separated by graphene‑plated silicon spacers. Prediction: Resonance patterns will match neutron star magnetic field harmonics, with peaks at 10^9 Hz intervals.
 
 ```c
 // Harmonic pulse driver through quartz rod
@@ -958,7 +998,7 @@ double ring_response(double pulse, double ring_spacing, double graphene_coupling
 ---
 
 ### 17.4 Engineering Implications
-- **Variable‑c interferometry:** Map field density by photon delay.  
-- **Spike chambers:** Controlled dQuark spike generation for detection.  
-- **Resonance rods:** Linear processors for harmonic sculpting.  
-- **Suit integration:** Consciousness‑reinforced AI interfaces with STE tension directly.
+- **Variable‑c interferometry:** Map field density by photon delay. Verifiable: Delays exceed 10^{-9} s in high-density zones.
+- **Spike chambers:** Controlled dQuark spike generation for detection. Verifiable: Spikes detectable via neutrino flux modulation.
+- **Resonance rods:** Linear processors for harmonic sculpting. Verifiable: Q-factors >1000 at neutron frequencies.
+- **Suit integration:** Consciousness‑reinforced AI interfaces with STE tension directly. Verifiable: EEG patterns synchronize with field harmonics.
