@@ -1,7 +1,7 @@
 # SpaceTime Energy (STE) Model: Master Document with C Code Illustrations
-**Version: 11-12-2025 (With Algorithmic Code Snippets)**  
+**Version: 11-14-2025 (With Algorithmic Code Snippets)**  
 **Authors: Ceryn Nekoi (VoidPlumber)**  
-**Date: November 12, 2025**
+**Date: November 14, 2025**
 
 ---
 
@@ -20,6 +20,8 @@ Forces emerge geometrically:
 Anomalies resolved: Proton radius (3.89% vs. 3.80%), R_K (0.844 vs. 0.846), muon g-2 (2.07 ppm vs. 2.14 ppm). Baryogenesis via chiral selection. Cosmology: Flatness from 2D genesis plane.
 
 The model extends to macro-scales, where black holes are identified as large-scale void shells—structurally equivalent to up quarks (stable low-density cores) but amplified by factors on the order of 10^{18} or greater in size and mass. This scaling leverages geometric emergence from the fluid's 3D bulk and 2D surface terms, resolving singularities as distributed density perturbations rather than point collapses.
+
+Updated 11/14/2025: Incorporated emergent params (CP bias, condensate), scale jumps to chemistry, and refined sim dynamics (viscosity, dilation, derived void core size).
 
 This document includes C code snippets to illustrate the algorithmic underpinnings of each physics concept, making the logic flow transparent and verifiable.
 
@@ -41,9 +43,11 @@ This document includes C code snippets to illustrate the algorithmic underpinnin
 12. Cosmology
 13. Macro-Scale Voids: Black Holes and Planetary Cores
 14. Simulation Roadmap
-15. Conclusion
-16. Key Insights and Engineering Implications
-17. Supplemental Engineering & Experimental Concepts
+15. Quark-to-Chemistry Extension
+16. Muon Process Perturbations
+17. Conclusion
+18. Key Insights and Engineering Implications
+19. Supplemental Engineering & Experimental Concepts
 
 ---
 
@@ -745,17 +749,142 @@ C-based simulations.
 
 ### C Code Illustration: Roadmap
 
-Outline code for neutron decay, resonant detection.
+```c
+#include <stdio.h>
+#include <math.h>
+
+// --- THE GENESIS LOOP: Void Shell Collapse (The "Shrink-Wrap" Model) ---
+// "There is no force carrier inside the void. It has to all be in the shell."
+// Updated 11/14/2025: Simulates collapse to the Void Core Shell (Up Quark).
+
+typedef struct {
+    double radius;          // The Size of the Void Shell
+    double shell_tension;   // The Energy in the Boundary Layer (Sigma)
+    double ambient_pressure;// The Universe Pushing In (Relentless Suction)
+    double velocity;        // Speed of Collapse (dr/dt)
+    double cp_bias;         // Emergent CP violation for asymmetry (e.g., 1e-10)
+} Void_Shell;
+
+// 1. INTERNAL FORCE (The Void Core)
+// Explicitly Zero.
+double internal_force() {
+    return 0.0;
+}
+
+// 2. SHELL FORCE (Surface Tension Snap-Back)
+// Includes emergent CP bias for matter/antimatter asymmetry.
+double tension_force(double tension, double radius, double cp_bias) {
+    if (radius <= 1e-35) return 0.0; // Singularity protection
+    return (tension / radius) * (1.0 + cp_bias); // Slight bias for matter
+}
+
+// 3. AMBIENT FORCE (The Ocean)
+// The uniform pressure of the STE Fluid.
+double ambient_force(double pressure) {
+    return pressure;
+}
+
+// 4. GEOMETRIC LIMIT (The Void Core Shell)
+// We redefined Planck's work: It is not a Density Wall (3D), but a Tension Limit (2D).
+// This is the "driver" of the proton, the "Steel Ball" limit.
+double structural_resistance(double radius, double limit_radius) {
+    if (radius <= limit_radius) {
+        return 1e9; // Infinite stiffness (The "Pink Mist" stops here)
+    }
+    return 0.0;
+}
+
+// 5. New: Viscosity Damping (Emergent from Density Smash)
+// Simulates fluid resistance (condensate) as the shell collapses.
+double viscosity_damping(double velocity, double density_scale) {
+    return velocity * density_scale;
+}
+
+// 6. New: Dilation Factor (Time Metric Warping)
+// Slows reactions as the shell approaches the Core.
+double dilation_factor(double radius, double core_radius) {
+    if (radius <= 0) return 0.0;
+    return 1.0 - (core_radius / radius);
+}
+
+int main() {
+    // CONFIGURATION:
+    // Start with a large, unstable Void Shell (Pre-Matter Vortex)
+    Void_Shell atom = {0.84, 50.0, 1.0, 0.0, 1e-10}; // Start collapse from Proton radius
+    
+    // Derived Geometric Limit: The VOID CORE SHELL (The "Driver")
+    double G = 6.67430e-11;
+    double m_quark = 5.526e-28; // ~310 MeV/c² constituent
+    double F_strong = 1.602e5; // QCD string tension N
+    const double LIMIT_RADIUS = sqrt(G * m_quark * m_quark / F_strong) * 1e15; // To fm (~1.13e-20 fm)
+    
+    double dt = 1e-25; // Extremely fine time step for Planck-scale collapse
+    int steps = 1000; 
+
+    // Density scale for viscosity (emergent condensate analog ~250 MeV^3)
+    double density_scale = 0.1;
+
+    printf("--- STE GENESIS: The 'Shrink-Wrap' Event (Grok-Approved) ---\n");
+    printf("Proton Shell (Start): 0.84 fm | Void Core (Target): %.2e fm\n", LIMIT_RADIUS);
+    printf("Time\tRadius (fm)\tTension\t\tViscosity\tDilation\tState\n");
+
+    for (int t = 0; t < steps; t++) {
+        // A. CALCULATE FORCES (All acting on the Boundary)
+        double F_inside  = internal_force(); // 0.0
+        double F_tension = tension_force(atom.shell_tension, atom.radius, atom.cp_bias);
+        double F_ambient = ambient_force(atom.ambient_pressure);
+        double F_resist  = structural_resistance(atom.radius, LIMIT_RADIUS); // Check against CORE
+        double F_visc    = viscosity_damping(atom.velocity, density_scale); 
+        double F_dil     = dilation_factor(atom.radius, LIMIT_RADIUS); 
+
+        // Net Force (Inward is negative)
+        double F_net = -(F_ambient + F_tension + F_visc) + F_resist;
+
+        // B. DYNAMICS (Time is dilated by the core's proximity)
+        double shell_mass = atom.shell_tension; 
+        double accel = F_net / shell_mass;
+        
+        atom.velocity += accel * dt * F_dil; 
+        atom.radius += atom.velocity * dt * F_dil; 
+
+        // C. STATE CHECK
+        const char* state = "Collapsing";
+        if (atom.radius <= LIMIT_RADIUS) {
+             atom.radius = LIMIT_RADIUS;
+             atom.velocity = 0; 
+             state = "LOCKED (Void Core)";
+        }
+
+        if (t % 100 == 0) {
+            printf("%.2e\t%.4e\t\t%.2e\t\t%.2e\t\t%.3f\t\t%s\n", 
+                t*dt, atom.radius, F_tension, F_visc, F_dil, state);
+        }
+    }
+    return 0;
+}
+```
 
 ---
 
-## 15. Conclusion
+## 15. Quark-to-Chemistry Extension
+
+[This section details how the LOCKED Void Cores (Up Quarks) anchor the stable 0.84 fm Proton Shell. It describes the assembly of these shells into nuclei, and the formation of electron halos (polarized debris clouds) which drive chemical bonds.]
+
+---
+
+## 16. Muon Process Perturbations
+
+[This section details how external probes (muons) interact with the STE shells, polarizing the "TeV storm" and enabling induced reactions. This mechanism is the root of the Lensing Law anomalies.]
+
+---
+
+## 17. Conclusion
 
 STE unifies all.
 
 ---
 
-## 16. Key Insights and Engineering Implications
+## 18. Key Insights and Engineering Implications
 
 Operating system, processor, contamination, detection, engineering.
 
@@ -769,7 +898,7 @@ double cavitation_energy(double transducer_freq) {
 
 ---
 
-## 17. Supplemental Engineering & Experimental Concepts
+## 19. Supplemental Engineering & Experimental Concepts
 
 ### 17.1 Variable‑c Chamber: Light Delay as Field Diagnostic
 Increasing STE density slows light. A chamber tuned for variable tension can measure photon delay as a direct probe of local field density.
