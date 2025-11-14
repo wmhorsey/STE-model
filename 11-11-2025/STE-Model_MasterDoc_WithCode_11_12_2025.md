@@ -47,6 +47,7 @@ STE Rosetta Stone: Glossary
 15. Quark-to-Chemistry Extension
 16. Muon Process Perturbations
 17. Conclusion
+17a. Testable Predictions
 18. Key Insights and Engineering Implications
 19. Supplemental Engineering & Experimental Concepts
 
@@ -328,6 +329,30 @@ int main() {
 
 This models quarks as data structures with stability and charge derived from void properties.
 
+### Detailed Void Core Mechanics
+
+The Up Quark (u) is the fundamental stable particle: a composite object consisting of a high-energy Spike (shell) wrapped around a central Void (ρ ≈ 0 bubble). Unlike a simple knot in the STE fluid, which would be pulled inward from all sides by its own gravity, the Void Core has a "1-sided anchor." The shell has no gravitational pull from the inside due to the void's absolute emptiness. This asymmetry makes the structure "puffed up," larger, and more rigid than a compact knot.
+
+Mass emerges as the effective inertia of this locked resonant flow-pattern. The "puffed up" energy spread over a larger shell results in lower integrated density, making the Void Core the low-mass component compared to denser structures.
+
+### Detailed Spike/Down Quark Mechanics
+
+The Down Quark (d) is not a fundamental particle but an emergent "splash zone"—a stable, churning interference pattern of inflowing STE fluid created by the "siphon" action of a Void Core. Analogous to the complex, multi-pole flow around a spinning black hole like Sagittarius A*, which whips inflowing gas into stable splash zones, a Void Core (micro black hole) does the same to the STE fluid, producing these patterns.
+
+These spikes are metastable flares/exhausts, high-ρ vents that can stabilize temporarily but tend toward instability.
+
+### Neutron Primacy
+
+The neutron (udd) forms first as the "1-body system," easiest to create. A single Void Core spins and siphons ambient STE, whipping its own flow into two stable splash zones (d,d). The proton (uud) is the "2-body system," requiring two Void Cores to be wrangled together, creating one splash zone (d) between them.
+
+### Mass Difference Explanation
+
+This model predicts neutron mass mechanically:
+- Proton (uud): 2 low-mass Void Cores + 1 emergent splash zone.
+- Neutron (udd): 1 low-mass Void Core + 2 emergent splash zones.
+
+Since splash zones are denser, heavier "knots," the neutron is heavier than the proton.
+
 ---
 
 ## 4. Proton & Neutron Engines
@@ -523,6 +548,8 @@ This code calculates photon delay as a function of field density, enabling inter
 
 Beta decay: dQuark spike vents excess energy via weak lensing, transforming to uQuark + e + ν_e.
 
+The weak force is a fluid-dynamic phase transition. In the unstable 1-body udd neutron, the single u-engine cavitates and digs a new Void, reconfiguring into the stable 2-body uud proton. Excess d splash and field wash eject as electron and anti-neutrino. Reverse: electron capture under pressure forces proton to absorb electron, collapsing to neutron.
+
 ### C Code Illustration: Beta Decay Simulation
 
 Function to simulate decay probability and transformation.
@@ -571,6 +598,8 @@ This illustrates the probabilistic nature of beta decay and quark transformation
 
 Strong force: 2D shell tension + void-locking (cores attract) + flare-quenching (spikes repel).
 
+The strong force is not a "cage" but the active consequence of the Void Core's "siphon" nature. You cannot isolate a Void Core; attempting to do so triggers its black hole-like reconfiguration of local STE fluid to build a new particle around itself. Void-locking attracts cores together, while flare-quenching repels spikes, maintaining confinement.
+
 ### C Code Illustration: Strong Force Calculations
 
 Functions for locking and quenching.
@@ -607,6 +636,20 @@ This computes the strong force components algorithmically.
 ## 7. Electromagnetism: Leaked Flare
 
 EM: 2D leaked flare interaction (Coulomb's Law).
+
+Electromagnetism is the short-range fluid dynamics of vortices (spin). Polarity: Charge is spin-direction; proton (net void-excess) is CCW vortex, electron ("wash") is CW vortex. Attraction: Opposite spins mesh, smooth flow creates low-pressure channel (Bernoulli) pulling together. Repulsion: Same spins clash, turbulence creates high-pressure shoving apart.
+
+### Electron as Field Wash
+
+The electron is not a particle but a stable, diffuse "resonant field wash"—a standing wave induced in the STE fluid by the proton's net "void-excess" (positive charge). This wash is the quantum probability cloud, physically realized.
+
+### Lepton Family as Harmonics
+
+The electron is the ground-state resonance (fundamental note). Muon and tau are higher harmonics—overcharged shells vibrating energetically and unstably, decaying (shedding neutrinos) back to the electron.
+
+### Photon as Vortex-Pulse
+
+A photon is a transient "bullet" of pure spin-energy shed by an electron (vortex) as it "jiggles" or snaps to a lower energy state. Travels at c, the medium's speed limit.
 
 ### C Code Illustration: EM Interactions
 
@@ -744,6 +787,8 @@ double feedback_loop(double input, double gain) {
 ## 12. Cosmology
 
 Flatness from 2D genesis.
+
+The universe's cyclical life: No Big Bang, but Big Merge of supermassive void shells, trapping 2D "Planck Pancake" of energy. Collapse/spread creates 3D surface. Primordial "Neutron Soup" freezes out neutrons first. After ~15 min, ambient ρ drops, free neutrons decay to protons + electrons (hydrogen). Stars form, evolve; massive stars undergo electron capture to neutronium. Unstable neutronium collapses via cavitation, creating black hole void shells. These shells merge, restarting the cycle.
 
 ### C Code Illustration: Flatness
 
@@ -907,6 +952,12 @@ int main() {
 ## 17. Conclusion
 
 STE unifies all.
+
+## 17a. Testable Predictions
+
+- Neutron Lifetime Anomaly: 9-sec discrepancy real; in "bottle," collective siphon lowers local ρ, allowing faster decay. Test: Place atomic clock inside bottle—STE predicts faster ticking (less drag); GR predicts slower.
+
+- Cosmic Anomalies as Features: Redshift is tired light/drag, not expansion. CMB is thermal froth/cooling edge of pancake. Axis of Evil: Expected from pancake structure, not anomaly.
 
 ---
 
