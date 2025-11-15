@@ -280,7 +280,7 @@ Contaminated clouds form atoms.
 
 ## 11. Emergent Layers: Chemistry, Biology, & Consciousness
 
-Emergent from STE.
+Emergent from STE. In biology, atomic structures from paired voids and out-feeding patterns enable chiral fidelity in amino acids/DNA. Backwards spins in nucleus attachments could cascade to incorrect bends in protein folds, disrupting homochirality and leading to misfolds (e.g., amyloids). STE views consciousness as emergent resonances in neural STE flows, bridging to AI integration.
 
 
 ## 12. Cosmology
@@ -292,7 +292,7 @@ The universe's cyclical life: No Big Bang, but Big Merge of supermassive void sh
 
 ## 13. Macro-Scale Voids: Black Holes and Planetary Cores
 
-Scaled void shells.
+Scaled void shells. Black holes exhibit dormancy-activation cycles: shells spin with excess energy, jettisoning via EM radiance before dormancy—no input needed, as voids wait indefinitely until perturbations reignite asymmetric geometry for recycling. Shells aren't always spherical—deviations signal defects like fused bubbles/mergers, with outwards pull from STE field connections countering inflows. The actual shell handles geometric absorption; the disillusion field modulates fuzzy horizons.
 
 
 ## 14. Simulation Roadmap
@@ -302,13 +302,13 @@ C-based simulations.
 
 ## 15. Quark-to-Chemistry Extension
 
-[This section details how the LOCKED Void Cores (Up Quarks) anchor the stable 0.84 fm Proton Shell. It describes the assembly of these shells into nuclei, and the formation of electron halos (polarized debris clouds) which drive chemical bonds.]
+[This section details how the LOCKED Void Cores (Up Quarks) anchor the stable 0.84 fm Proton Shell. It describes the assembly of these shells into nuclei, and the formation of electron halos (polarized debris clouds) which drive chemical bonds.] TeV particles manifest as up-close signatures of matter 'being eaten' by void cores—funneling inflows, absorbed at shells, recycled as pulses. Shell boundaries/shapes determine output energy modulus: asymmetric curvature modulates magnitude/frequency, filtering pulses (isotropic spheres vs. directional oblate).
 
 ---
 
 ## 16. Muon Process Perturbations
 
-[This section details how external probes (muons) interact with the STE shells, polarizing the "TeV storm" and enabling induced reactions. This mechanism is the root of the Lensing Law anomalies.]
+[This section details how external probes (muons) interact with the STE shells, polarizing the "TeV storm" and enabling induced reactions. This mechanism is the root of the Lensing Law anomalies.] Neutrons, as dipolar stabilizers, are ubiquitous in atomic structures—funneling energy to cores, damping overloads via ringdown. Their roles extend muon perturbations, maintaining chiral equilibrium amid TeV storms.
 
 ---
 
@@ -321,6 +321,10 @@ STE unifies all.
 - Neutron Lifetime Anomaly: 9-sec discrepancy real; in "bottle," collective siphon lowers local ρ, allowing faster decay. Test: Place atomic clock inside bottle—STE predicts faster ticking (less drag); GR predicts slower.
 
 - Cosmic Anomalies as Features: Redshift is tired light/drag, not expansion. CMB is thermal froth/cooling edge of pancake. Axis of Evil: Expected from pancake structure, not anomaly.
+
+- Chiral Gradients: EHT polarization flips in BH accretion disks show handedness variations; test for cosmic dipole in galaxy spins (SDSS/JWST data).
+
+- He4 Analog: Laser-excited superfluid He4 diffraction reveals void patterns/chiral reconnection; predicts asymmetric fringes distinguishable from turbulence.
 
 ---
 
